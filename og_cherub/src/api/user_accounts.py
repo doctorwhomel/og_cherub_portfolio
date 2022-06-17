@@ -38,7 +38,6 @@ def create():
         return abort(400)
     if len(request.json['password']) < 8 or len(request.json['user_name']) < 3:
         return abort(400)
-    # construct Tweet
     u = User(
         user_name=request.json['user_name'],
         password=scramble(request.json['password'])

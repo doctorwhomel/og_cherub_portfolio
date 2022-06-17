@@ -12,7 +12,7 @@ def populate_picks():
 
     active = request.json["id"]
 
-    profiles = Profile.query.all()  # Compile profiles table
+    profiles = Profile.querpy.all()  # Compile profiles table
     top_picks = Pick.query.all() # Compile top_picks table
 
     for p in profiles: #identify active user
