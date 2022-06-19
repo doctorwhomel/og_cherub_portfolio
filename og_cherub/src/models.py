@@ -3,6 +3,8 @@ from typing import Text
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
+import pytest
+
 db = SQLAlchemy()
 
 # accounts_table = db.Table(
@@ -24,7 +26,6 @@ db = SQLAlchemy()
 #         nullable=False
 #     )
 # )
-
 
 class User (db.Model):
     __tablename__ = 'user_accounts'

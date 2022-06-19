@@ -2,9 +2,11 @@ from flask import Blueprint, jsonify, abort, request
 from ..models import User, db
 import sqlalchemy
 from sqlalchemy import insert
+from sqlalchemy import true, false
 
 import hashlib
 import secrets
+
 
 
 def scramble(password: str):
@@ -32,7 +34,7 @@ def show(id: int):
 
 
 @bp.route('', methods=['POST'])
-def create():
+def create_account():
 
     if 'user_name' not in request.json or 'password' not in request.json:
         return abort(400)
@@ -43,8 +45,12 @@ def create():
         password=scramble(request.json['password'])
     )
     db.session.add(u)  # prepare CREATE statement
-    db.session.commit()  # execute CREATE statement
-    return jsonify(u.serialize())
+    #db.session.commit()  # execute CREATE statement
+    try:
+        db.session.commit()
+        return jsonify(u.serialize())
+    except:
+        return jsonify(False)
 
 
 @bp.route('/<int:id>', methods=['DELETE'])

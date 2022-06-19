@@ -12,14 +12,14 @@ def populate_picks():
 
     active = request.json["id"]
 
-    profiles = Profile.querpy.all()  # Compile profiles table
-    top_picks = Pick.query.all() # Compile top_picks table
+    profiles = Profile.query.all()  # Compile profiles table
+    top_picks = Pick.query.all()  # Compile top_picks table
 
-    for p in profiles: #identify active user
+    for p in profiles:  # identify active user
         if p.id == active:
             user = p
 
-    for pk in top_picks: #remove any pre-existing data for active user to avoid duplication of unique data type
+    for pk in top_picks:  # remove any pre-existing data for active user to avoid duplication of unique data type
         if pk.user_id == user.id:
             db.session.delete(pk)
 
@@ -29,7 +29,7 @@ def populate_picks():
         if p.user_location == user.user_location and p.age >= user.min_age and p.age <= user.max_age:  # Filter out incompatable profiles
             if p.gender == user.seeking or user.seeking == 'All':
 
-                pk = Pick( #construct Pick from compatiple profile
+                pk = Pick(  # construct Pick from compatiple profile
                     pick_id=p.id,
                     user_id=user.id
                 )
