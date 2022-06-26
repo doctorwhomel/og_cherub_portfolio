@@ -27,3 +27,22 @@ def generate_picks(id: int):
             if p.gender == user.seeking or user.seeking == 'All':
                 result.append(p.serialize())
     return jsonify(result)
+
+@bp.route('', methods=['POST'])
+def create_profile():
+
+    if 'seeking' not in request.json or 'min_age' not in request.json:
+        return abort(400)
+    if len(request.json['password']) < 8 or len(request.json['user_name']) < 3:
+        return abort(400)
+    u = User(
+        user_name=request.json['user_name'],
+        password=scramble(request.json['password'])
+    )
+    db.session.add(u)  # prepare CREATE statement
+    #db.session.commit()  # execute CREATE statement
+    try:
+        db.session.commit()
+        return jsonify(u.serialize())
+    except:
+        return jsonify(False)

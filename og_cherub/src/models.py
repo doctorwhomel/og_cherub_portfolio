@@ -27,6 +27,7 @@ db = SQLAlchemy()
 #     )
 # )
 
+
 class User (db.Model):
     __tablename__ = 'user_accounts'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
